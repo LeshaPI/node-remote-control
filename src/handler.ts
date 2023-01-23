@@ -2,6 +2,7 @@ import { mouseUp, mouseDown, mouseLeft, mouseRight, getMouseCoordinates } from "
 import { createWebSocketStream } from "ws"
 import { commandsList } from "./utils/consts";
 import { drawCircle, drawRectangle, drawSquare } from "./websocket_commands/drawing";
+import { printScreen } from "./websocket_commands/printScreen";
 
 const commandsHandler = async ( ws ) => {
   const webSocketStream = createWebSocketStream( ws, 
@@ -48,11 +49,15 @@ const commandsHandler = async ( ws ) => {
         webSocketStream.write( cmd );
         break;
       }
-
       case commandsList.DRAW_RECTANGLE: {
         await drawRectangle( args );
         webSocketStream.write( cmd );
         break;
+      }
+      case commandsList.PRINT_SCREEN: {
+				const string = await printScreen();
+				webSocketStream.write(`${cmd} ${string}`);
+				break;
       }
     }
   });
