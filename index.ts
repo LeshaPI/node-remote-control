@@ -10,6 +10,9 @@ httpServer.listen(HTTP_PORT);
 const WS_PORT = 8080;
 const ws = new WebSocketServer({port: WS_PORT}, () => {console.log(`Start WS server on the ${WS_PORT} port!`)});
 
-ws.on('connection', async (ws, req) => {
-    await commandsHandler( ws );
-});
+ws.on('connection', async (ws) => await commandsHandler( ws ));
+
+ws.on('close', () => {
+    ws.close();
+    console.log('Ws server closed');
+})
