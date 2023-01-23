@@ -17,8 +17,20 @@ export const drawCircle =  async( radius ) => {
 
 export const drawSquare = async ( px ) => {
     px = Number(px);
+    
     await mouse.drag(left(px));
     await mouse.drag(down(px));
     await mouse.drag(right(px));
+    await mouse.drag(up(px));
+}
+
+
+export const drawRectangle = async( [px, length] ) => {
+    px = Number(px);
+    length = Number(length);
+
+    await mouse.drag(left(length));
+    await mouse.drag(down(px));
+    await mouse.drag(right(length));
     await mouse.drag(up(px));
 }
